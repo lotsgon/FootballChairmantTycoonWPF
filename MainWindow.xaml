@@ -1,0 +1,312 @@
+﻿<Window x:Class="FootballChairmanTycoonWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FootballChairmanTycoonWPF"
+        xmlns:viewmodels="clr-namespace:FootballChairmanTycoonWPF.ViewModels"
+        xmlns:views="clr-namespace:FootballChairmanTycoonWPF.Views"
+        d:DataContext="{x:Static viewmodels:DesignTimeViewModel.sInstance}"
+        mc:Ignorable="d"
+        Title="Football Chairman Tycoon" Height="600" Width="800" 
+                                        MinHeight="400" MinWidth="600"
+        x:Name="TaskManager">
+
+    <Window.Resources>
+        <DataTemplate x:Name="clubListViewTemplate" DataType="{x:Type viewmodels:ClubListViewModel}">
+            <views:ClubListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="playerProfileViewTemplate" DataType="{x:Type viewmodels:PlayerProfileViewModel}">
+            <views:ClubListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="playerListViewTemplate" DataType="{x:Type viewmodels:PlayerListViewModel}">
+            <views:PlayerListView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="resultsViewTemplate" DataType="{x:Type viewmodels:ResultsViewModel}">
+            <views:ResultsView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="leagueTableViewTemplate" DataType="{x:Type viewmodels:LeagueTableViewModel}">
+            <views:LeagueTableView DataContext="{Binding}"/>
+        </DataTemplate>
+
+        <Style  TargetType="{x:Type ListBoxItem}">
+            <Style.Triggers>
+                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                    <Setter Property="Background" Value="#19f39611"></Setter>
+                </Trigger>
+
+                <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                    <Setter Property="Background" Value="#19000000"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NormalButton" TargetType="{x:Type Button}">
+
+        </Style>
+        <Style x:Key="SidebarButton" TargetType="{x:Type Button}" BasedOn="{StaticResource NormalButton}">
+            <Setter Property="Background" Value="#373737" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Padding" Value="0 3"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="0" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <ContentPresenter x:Name="MyContentPresenter" Content="{TemplateBinding Content}" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,0,0,0" />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#FF454549" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="OrangeRed" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel Grid.Column="0" 
+                       Background="#373737"
+                       HorizontalAlignment="Left">
+
+            <StackPanel>
+
+                <Button Style="{StaticResource SidebarButton}"
+                        Grid.Row="0"
+                        ToolTip="Your Club"
+                        Command="{x:Static local:TaskCommands.ViewPlayerList}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Icons/ThumbsUp.png"  Stretch="None" MaxHeight="24" MaxWidth="24" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch">Players</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButton}"
+                        Grid.Row="1"
+                        ToolTip="Your Club"
+                        Command="{x:Static local:TaskCommands.ViewClubList}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Icons/ThumbsUp.png"  Stretch="None" MaxHeight="24" MaxWidth="24" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch">Clubs</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButton}"
+                        Grid.Row="2"
+                        ToolTip="Your Club">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Icons/ThumbsUp.png"  Stretch="None" MaxHeight="24" MaxWidth="24" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch">Something Bigger</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButton}" 
+                        Grid.Row="3"
+                        ToolTip="Your Club"
+                        Command="{x:Static local:TaskCommands.ViewResults}">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <Image Source="Resources/Icons/ThumbsUp.png"  Stretch="None" MaxHeight="24" MaxWidth="24" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch">Results</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource SidebarButton}"
+                        Grid.Row="4"
+                        ToolTip="Your Club"
+                        Command="{x:Static local:TaskCommands.ViewLeagueTable}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Resources/Icons/ThumbsUp.png" Stretch="None" MaxHeight="34" MaxWidth="34" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch">League</TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+
+
+        <Grid Grid.Column="1">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Menu Grid.Row="1"
+              Grid.Column="1">
+
+            <MenuItem Header="File">
+                <MenuItem Header="Open" 
+                          Command="{x:Static ApplicationCommands.Open}">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/open2.ico"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Style>
+                        <Style TargetType="MenuItem">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="ToolTip" Value="You must clear the list first." />
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+
+                <MenuItem Header="Save" 
+                          Command="{x:Static ApplicationCommands.Save}">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/save2.ico"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Style>
+                        <Style TargetType="MenuItem">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="ToolTip" Value="Use Save As to save your list." />
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+
+                <MenuItem Header="Save As" 
+                          Command="{x:Static ApplicationCommands.SaveAs}">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/saveAs.ico"/>
+                    </MenuItem.Icon>
+                    <MenuItem.Style>
+                        <Style TargetType="MenuItem">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="ToolTip" Value="You must have a list to save first." />
+                                    <Setter Property="ToolTipService.ShowOnDisabled" Value="True" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </MenuItem.Style>
+                </MenuItem>
+
+                <Separator />
+
+                <MenuItem Header="Exit" 
+                          Command="{x:Static local:TaskCommands.ExitApplication}">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/exit.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+
+            </MenuItem>
+            <MenuItem Header="List">
+                <MenuItem Header="Create Task">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/create.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Clear List" 
+                          Command="{x:Static local:TaskCommands.ClearList}">
+                    <MenuItem.Icon>
+                        <Image Source="Resources/Icons/clearList.ico"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="{Binding CurrentTitle, UpdateSourceTrigger=PropertyChanged}" 
+                   TextAlignment="Center" 
+                   FontWeight="Bold" 
+                   FontSize="40"
+                   Padding="0 10"
+                   Grid.Column="0"
+                   Background="Firebrick"
+                   Foreground="White"/>
+
+                <Button Style="{StaticResource SidebarButton}"
+                        Grid.Column="1"
+                        ToolTip="Your Club"
+                        Command="{x:Static local:TaskCommands.Continue}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Padding="15 10" VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding Week, 
+                 StringFormat='Continue to Week {0}'}"/>
+                        <Image Source="Resources/Icons/ThumbsUp.png"  Stretch="None" MaxHeight="24" MaxWidth="24" HorizontalAlignment="Left" Margin="10,0,0,5"/>
+                    </StackPanel>
+                </Button>
+
+            </Grid>
+
+            <Grid Grid.Row="2">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Menu Grid.Column="0"
+                  Grid.Row="0"
+                  Grid.ColumnSpan="2"
+                  Background="Lavender">
+
+                    <TextBox MinWidth="100" 
+                         Text="{Binding SearchInput, UpdateSourceTrigger=PropertyChanged}"
+                         ToolTip="Search."/>
+
+                    <MenuItem Header="Manager">
+                        <MenuItem.Icon>
+                            <Image Source="Resources/Icons/filter2.png"/>
+                        </MenuItem.Icon>
+                        <MenuItem Header="Filter By"/>
+
+                        <CheckBox Content="Completed" 
+                              IsChecked="{Binding ShowOnlyCompleted, UpdateSourceTrigger=PropertyChanged}"/>
+
+                        <CheckBox Content="Incompleted" 
+                              IsChecked="{Binding ShowOnlyIncompleted, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Separator />
+
+                        <MenuItem Header="Filter Search By"/>
+
+                        <CheckBox Content="Title" 
+                              IsChecked="{Binding ShowOnlyTitle, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <CheckBox Content="Description" 
+                              IsChecked="{Binding ShowOnlyDescription, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <CheckBox Content="Tags" 
+                              IsChecked="{Binding ShowOnlyTags,UpdateSourceTrigger=PropertyChanged}" />
+
+                        <Separator />
+
+                        <MenuItem Header="Clear Filter" 
+                              Command="{x:Static local:TaskCommands.ClearFilter}" />
+                    </MenuItem>
+                </Menu>
+
+                <ContentControl Grid.Row="3"
+                            Content="{Binding CurrentView}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

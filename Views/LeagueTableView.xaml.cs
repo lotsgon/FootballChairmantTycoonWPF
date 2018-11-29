@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace FootballChairmanTycoonWPF
+namespace FootballChairmanTycoonWPF.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LeagueTableView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LeagueTableView : UserControl
     {
-        public MainWindow()
+        public LeagueTableView()
         {
             InitializeComponent();
         }
